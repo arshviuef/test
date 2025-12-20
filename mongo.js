@@ -9,7 +9,7 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2];
 
-const url = `mongodb+srv://fullstack:${process.env.PASS}@cluster0.a7b3qf9.mongodb.net/noteApp?appName=Cluster0`;
+const url = `${process.env.URL}`;
 
 mongoose.set("strictQuery", false);
 
@@ -23,7 +23,7 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model("Note", noteSchema);
 
 const note = new Note({
-  content: "STAYC!!!",
+  content: "This is a note",
   important: true,
 });
 
