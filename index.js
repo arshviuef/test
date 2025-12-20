@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const Note = require("./models/person");
 const app = express();
 
 morgan.token("request", (request, response) => {
@@ -46,7 +47,9 @@ let persons = [
 ];
 
 app.get("/api/persons", (request, response) => {
-  response.json(persons);
+  Note.find({}).then((notes) => {
+    response.json(notes);
+  });
 });
 
 app.get("/info", (request, response) => {
@@ -99,17 +102,23 @@ app.post("/api/persons", (request, response) => {
     });
   }
 
-  const person = {
+  const person = new Note({
     id: generateId(),
     name: body.name,
     number: body.number,
-  };
+  });
 
-  persons = persons.concat(person);
-  response.json(person);
+  person
+    .save()
+    .then((savedNote) => {
+      response.json(savedNote);
+    })
+    .catch((error) => {
+      console.log("Error saving note", error.message);
+    });
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

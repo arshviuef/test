@@ -37,6 +37,6 @@ if (process.argv[3] && process.argv[4]) {
     result.forEach((note) => {
       console.log(`${note.name} ${note.number}`);
     });
-    mongoose.connection.close;
+    mongoose.connection.close();
   });
 }
