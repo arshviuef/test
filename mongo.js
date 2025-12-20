@@ -15,26 +15,28 @@ mongoose.set("strictQuery", false);
 
 mongoose.connect(url, { family: 4 });
 
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
+const phonebookSchema = new mongoose.Schema({
+  name: String,
+  number: String,
 });
 
-const Note = mongoose.model("Note", noteSchema);
+const Note = mongoose.model("Note", phonebookSchema);
 
-const note = new Note({
-  content: "This is a note",
-  important: true,
-});
-
-Note.find({}).then((result) => {
-  result.forEach((note) => {
-    console.log(note);
+if (process.argv[3] && process.argv[4]) {
+  const note = new Note({
+    name: process.argv[3],
+    number: process.argv[4],
   });
-  mongoose.connection.close;
-});
 
-// note.save().then((result) => {
-//   console.log("note saved!");
-//   mongoose.connection.close();
-// });
+  note.save().then((result) => {
+    console.log(`Added ${note.name} number ${note.number} to phonebook`);
+    mongoose.connection.close();
+  });
+} else {
+  Note.find({}).then((result) => {
+    result.forEach((note) => {
+      console.log(`${note.name} ${note.number}`);
+    });
+    mongoose.connection.close;
+  });
+}
