@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 if (process.argv.length < 3) {
-  console.log("give password as argument");
+  console.log("Give password as argument");
   process.exit(1);
 }
 
