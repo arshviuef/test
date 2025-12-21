@@ -3,6 +3,9 @@ const morgan = require("morgan");
 const Note = require("./models/person");
 const app = express();
 
+const cors = require("cors");
+app.use(cors({ origin: "*" }));
+
 app.use(morgan("tiny"));
 app.use(express.static("dist"));
 app.use(express.json());
