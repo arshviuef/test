@@ -37,6 +37,19 @@ app.get("/api/persons/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
+app.put("/api/persons/:id", (request, response, next) => {
+  const { name, number } = request.body;
+
+  Note.findByIdAndUpdate(request.params.id, { name, number }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return response.status(404).json({ error: "person not found" });
+      }
+      response.json(result);
+    })
+    .catch((error) => next(error));
+});
+
 app.delete("/api/persons/:id", (request, response, next) => {
   Note.findByIdAndDelete(request.params.id)
     .then((result) => {
