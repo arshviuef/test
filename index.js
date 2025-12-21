@@ -3,9 +3,9 @@ const morgan = require("morgan");
 const Note = require("./models/person");
 const app = express();
 
+app.use(morgan("tiny"));
 app.use(express.static("dist"));
 app.use(express.json());
-app.use(morgan("tiny"));
 
 app.get("/api/persons", (request, response, next) => {
   Note.find({})
